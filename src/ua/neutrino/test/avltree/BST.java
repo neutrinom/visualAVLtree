@@ -4,17 +4,14 @@ public class BST<E extends Comparable<E>>
   protected TreeNode<E> root;
   protected int size = 0;
 
-  /** Create a default binary tree */
   public BST() {
   }
-
-  /** Create a binary tree from an array of objects */
   public BST(E[] objects) {
     for (int i = 0; i < objects.length; i++)
       insert(objects[i]);
   }
 
-  @Override /** Returns true if the element is in the tree */
+  @Override 
   public boolean search(E e) {
     TreeNode<E> current = root;
 
@@ -32,8 +29,7 @@ public class BST<E extends Comparable<E>>
     return false;
   }
 
-  @Override /** Insert element o into the binary tree
-   * Return true if the element is inserted successfully */
+  @Override 
   public boolean insert(E e) {
     if (root == null)
       root = createNewNode(e); 
@@ -56,47 +52,36 @@ public class BST<E extends Comparable<E>>
       else
         parent.right = createNewNode(e);
     }
-
     size++;
     return true;
   }
-
   protected TreeNode<E> createNewNode(E e) {
     return new TreeNode<E>(e);
   }
-
-  @Override /** Inorder traversal from the root*/
+  @Override 
   public void inorder() {
     inorder(root);
   }
-
-  /** Inorder traversal from a subtree */
   protected void inorder(TreeNode<E> root) {
     if (root == null) return;
     inorder(root.left);
     System.out.print(root.element + " ");
     inorder(root.right);
   }
-
-  @Override /** Postorder traversal from the root */
+  @Override 
   public void postorder() {
     postorder(root);
   }
-
-  /** Postorder traversal from a subtree */
   protected void postorder(TreeNode<E> root) {
     if (root == null) return;
     postorder(root.left);
     postorder(root.right);
     System.out.print(root.element + " ");
   }
-
-  @Override /** Preorder traversal from the root */
+  @Override
   public void preorder() {
     preorder(root);
   }
-
-  /** Preorder traversal from a subtree */
   protected void preorder(TreeNode<E> root) {
     if (root == null) return;
     System.out.print(root.element + " ");
@@ -104,8 +89,6 @@ public class BST<E extends Comparable<E>>
     preorder(root.right);
   }
 
-  /** This inner class is static, because it does not access 
-      any instance members defined in its outer class */
   public static class TreeNode<E extends Comparable<E>> {
     protected E element;
     protected TreeNode<E> left;
@@ -116,17 +99,13 @@ public class BST<E extends Comparable<E>>
     }
   }
 
-  @Override /** Get the number of nodes in the tree */
+  @Override 
   public int getSize() {
     return size;
   }
-
-  /** Returns the root of the tree */
   public TreeNode<E> getRoot() {
     return root;
   }
-
-  /** Returns a path from the root leading to the specified element */
   public java.util.ArrayList<TreeNode<E>> path(E e) {
     java.util.ArrayList<TreeNode<E>> list =
       new java.util.ArrayList<TreeNode<E>>();
@@ -146,12 +125,8 @@ public class BST<E extends Comparable<E>>
 
     return list;
   }
-
-  @Override /** Delete an element from the binary tree.
-   * Return true if the element is deleted successfully
-   * Return false if the element is not in the tree */
+  @Override 
   public boolean delete(E e) {
-    // Locate the node to be deleted and also locate its parent node
     TreeNode<E> parent = null;
     TreeNode<E> current = root;
     while (current != null) {
@@ -203,7 +178,7 @@ public class BST<E extends Comparable<E>>
     return true;
   }
 
-  @Override /** Obtain an iterator. Use inorder. */
+  @Override 
   public java.util.Iterator<E> iterator() {
     return new InorderIterator();
   }
@@ -218,42 +193,33 @@ public class BST<E extends Comparable<E>>
     public InorderIterator() {
       inorder(); 
     }
-
-    /** Inorder traversal from the root*/
     private void inorder() {
       inorder(root);
     }
-
-    /** Inorder traversal from a subtree */
     private void inorder(TreeNode<E> root) {
       if (root == null)return;
       inorder(root.left);
       list.add(root.element);
       inorder(root.right);
     }
-
-    @Override /** More elements for traversing? */
+    @Override 
     public boolean hasNext() {
       if (current < list.size())
         return true;
 
       return false;
     }
-
-    @Override /** Get the current element and move to the next */
+    @Override 
     public E next() {
       return list.get(current++);
     }
-
-    @Override /** Remove the current element */
+    @Override 
     public void remove() {
       delete(list.get(current));
       list.clear(); 
       inorder();
     }
   }
-
-  /** Remove all elements from the tree */
   public void clear() {
     root = null;
     size = 0;
